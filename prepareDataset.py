@@ -10,6 +10,8 @@ SAMPLE_RATE=22050
 DURATION=5
 SAMPLES_PER_TRACK=SAMPLE_RATE*DURATION
 
+
+# Function which segments each track, and stores its labels and mfccs.
 def save_MFCC(dataset_path, json_path, n_MFCC=13, n_fft=2048, hop_length=512, num_segments=5):
 
     # dictionary for storing data
