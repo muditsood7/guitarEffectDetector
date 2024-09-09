@@ -13,7 +13,7 @@ SAMPLES_PER_TRACK=SAMPLE_RATE*DURATION
 
 model = tf.keras.models.load_model('C:/Users/mudit/PycharmProjects/guitarEffectDetector/cnnModel.keras')
 
-def preprocess_file(file, json_path, n_MFCC=13, n_fft=2048, hop_length=512, num_segments=5):
+def preprocess_file(file, n_MFCC=13, n_fft=2048, hop_length=512, num_segments=5):
 
     # dictionary for storing data
     data = {
@@ -50,4 +50,16 @@ def preprocess_file(file, json_path, n_MFCC=13, n_fft=2048, hop_length=512, num_
 
 
 def predict_note(file):
-    return
+
+    # Store audio file
+    filename = secure_filename(file.filename)
+    file_path = os.path.join("uploads", filename)
+    file.save(file_path)
+
+    # Preprocess the audio file
+    audio_data = preprocess_file(file_path)
+
+    # Run the audio data through the TensorFlow model
+    predictions = model.predict(np.expand_dims(audio_data, axis=0))
+
+    return predictions
